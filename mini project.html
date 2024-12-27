@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Search & Binary Converter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            line-height: 1.6;
+            padding: 0;
+            background-image: url('binary-background.jpg'); /* Replace with the path of your binary code image */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            transition: all 0.3s ease;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.6); /* Dark overlay to make the text stand out */
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-bottom: 5px solid #2980b9;
+            transition: all 0.3s ease;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        header p {
+            font-size: 1.4rem;
+            margin-top: 5px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .container {
+            width: 85%;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        section {
+            background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px 40px;
+            margin-bottom: 30px;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        section:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        @keyframes slideUp {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        section h2 {
+            color: #2980b9;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        section h3 {
+            color: #2980b9;
+            font-size: 1.6rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        section p, section ol {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        ol li {
+            margin-bottom: 12px;
+            list-style: inside;
+        }
+
+        .code-block {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            margin-top: 15px;
+            overflow-x: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            background-color: #ecf0f1;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-top: 5px solid #2980b9;
+            transition: all 0.3s ease;
+        }
+
+        .footer-text {
+            font-size: 0.9rem;
+        }
+
+        .footer-text a {
+            color: #ecf0f1;
+            text-decoration: none;
+        }
+
+        .conversion {
+            display: flex;
+            gap: 30px;
+            justify-content: space-between;
+            margin-top: 40px;
+            animation: fadeIn 3s ease-out;
+        }
+
+        .conversion div {
+            flex: 1;
+            background-color: #ecf0f1;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .conversion div:hover {
+            transform: scale(1.05);
+        }
+
+        .conversion div h3 {
+            color: #2980b9;
+            font-size: 1.6rem;
+        }
+
+        .conversion div p {
+            margin-top: 10px;
+            font-size: 1.1rem;
+        }
+
+        #binarySearchResult,
+        #binaryToDecimalResult,
+        #decimalToBinaryResult {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 15px;
+            color: #2ecc71;
+        }
+
+        /* Red error messages */
+        .error {
+            color: red;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Binary Search & Binary Converter</h1>
+        <p>An Interactive Guide to Binary Search Algorithm and Conversions</p>
+    </header>
+
+    <div class="container">
+        <!-- Binary Search Section -->
+        <section>
+            <h2>What is Binary Search?</h2>
+            <p>Binary Search is an efficient algorithm used to find the position of a target value within a sorted array. It repeatedly divides the search interval in half. If the value of the target is less than the middle element, the search continues on the left half, and if it's greater, the search continues on the right half.</p>
+
+            <h3>How Binary Search Works</h3>
+            <ol>
+                <li>Start with two pointers: low and high, representing the start and end of the list.</li>
+                <li>Find the middle element of the list.</li>
+                <li>If the middle element is equal to the target, return the index.</li>
+                <li>If the target is smaller, search the left half; if larger, search the right half.</li>
+                <li>Repeat until the target is found or the search space is empty.</li>
+            </ol>
+
+            <h3>Run Search Example</h3>
+            <p>Enter a sorted list of words and the target word to search for:</p>
+            <div class="input-container">
+                <label for="sortedWords">Sorted List (comma-separated): </label>
+                <input type="text" id="sortedWords" placeholder="e.g., apple, banana, cherry, date">
+                <label for="targetWord">Target Word: </label>
+                <input type="text" id="targetWord" placeholder="e.g., cherry">
+                <button class="btn" onclick="runBinarySearch()">Run Binary Search</button>
+            </div>
+            <p id="binarySearchResult"></p>
+            <p id="binarySearchError" class="error"></p> <!-- Error message will appear here -->
+        </section>
+
+        <!-- Binary Converter Section -->
+        <section>
+            <h2>Binary Converter</h2>
+            <p>Binary numbers are the fundamental building blocks of computers. In binary, only two digits, 0 and 1, are used to represent values. Binary numbers can be converted to decimal and vice versa.</p>
+
+            <div class="conversion">
+                <!-- Binary to Decimal -->
+                <div>
+                    <h3>Binary to Decimal</h3>
+                    <p>To convert a binary number to decimal, multiply each bit by 2 raised to the power of its position, starting from the rightmost bit (least significant bit).</p>
+                    <label for="binaryInput">Enter Binary Number: </label>
+                    <input type="text" id="binaryInput" placeholder="e.g., 1101">
+                    <button class="btn" onclick="convertBinaryToDecimal()">Convert to Decimal</button>
+                    <p id="binaryToDecimalResult"></p>
+                    <p id="binaryError" class="error"></p> <!-- Error message for binary input -->
+                </div>
+
+                <!-- Decimal to Binary -->
+                <div>
+                    <h3>Decimal to Binary</h3>
+                    <p>To convert a decimal number to binary, repeatedly divide the number by 2, recording the remainders.</p>
+                    <label for="decimalInput">Enter Decimal Number: </label>
+                    <input type="number" id="decimalInput" placeholder="e.g., 13">
+                    <button class="btn" onclick="convertDecimalToBinary()">Convert to Binary</button>
+                    <p id="decimalToBinaryResult"></p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p class="footer-text">&copy; 2024 Binary Search and Converter. All Rights Reserved. <br> <a href="mailto:support@binarysearch.com">Contact Us</a></p>
+    </footer>
+
+    <script>
+        // Binary Search Function
+        function runBinarySearch() {
+            const words = document.getElementById('sortedWords').value.split(',').map(word => word.trim());
+            const target = document.getElementById('targetWord').value.trim();
+            
+            if (words.length === 0 || target === "") {
+                document.getElementById('binarySearchError').textContent = "Both the sorted list and target word are required!";
+                return;
+            } else {
+                document.getElementById('binarySearchError').textContent = "";
+            }
+
+            const result = binarySearch(words, target);
+            document.getElementById('binarySearchResult').textContent = result === -1 ? 'Target not found' : Target found at index ${result};
+        }
+
+        function binarySearch(arr, target) {
+            let low = 0;
+            let high = arr.length - 1;
+            while (low <= high) {
+                const mid = Math.floor((low + high) / 2);
+                if (arr[mid] === target) {
+                    return mid;
+                } else if (arr[mid] < target) {
+                    low = mid + 1;
+                } else {
+                    high = mid - 1;
+                }
+            }
+            return -1;
+        }
+
+        // Binary to Decimal Conversion
+        function convertBinaryToDecimal() {
+            const binary = document.getElementById('binaryInput').value.trim();
+            
+            if (!/^[01]+$/.test(binary)) { // Check if input is binary
+                document.getElementById('binaryError').textContent = "Please enter a valid binary number!";
+                return;
+            } else {
+                document.getElementById('binaryError').textContent = "";
+            }
+
+            const decimal = binaryToDecimal(binary);
+            document.getElementById('binaryToDecimalResult').textContent = Decimal: ${decimal};
+        }
+
+        function binaryToDecimal(binary) {
+            let decimal = 0;
+            for (let i = 0; i < binary.length; i++) {
+                decimal += parseInt(binary[binary.length - 1 - i]) * Math.pow(2, i);
+            }
+            return decimal;
+        }
+
+        // Decimal to Binary Conversion
+        function convertDecimalToBinary() {
+            const decimal = parseInt(document.getElementById('decimalInput').value);
+
+            if (isNaN(decimal) || decimal < 0) {
+                document.getElementById('binaryError').textContent = "Please enter a valid positive decimal number!";
+                return;
+            } else {
+                document.getElementById('binaryError').textContent = "";
+            }
+
+            const binary = decimalToBinary(decimal);
+            document.getElementById('decimalToBinaryResult').textContent = Binary: ${binary};
+        }
+
+        function decimalToBinary(n) {
+            let binary = '';
+            while (n > 0) {
+                binary = (n % 2) + binary;
+                n = Math.floor(n / 2);
+            }
+            return binary || '0';
+        }
+    </script>
+</body>
+</html>

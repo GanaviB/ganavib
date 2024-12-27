@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f8ff;
+        }
+
+        .stopwatch {
+            text-align: center;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #display {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+    <div class="stopwatch">
+        <h1 id="display">00:00:00</h1>
+        <button id="start">Start</button>
+        <button id="stop">Stop</button>
+        <button id="reset">Reset</button>
+    </div>
+
+    <script>
+        let hours = 0;
+        let minutes = 0;
+        let seconds = 0;
+        let interval = null;
+        let isRunning = false;
+
+        // Event Listeners
+        document.getElementById('start').addEventListener('click', startStopwatch);
+        document.getElementById('stop').addEventListener('click', stopStopwatch);
+        document.getElementById('reset').addEventListener('click', resetStopwatch);
+
+        // Start the stopwatch
+        function startStopwatch() {
+            if (!isRunning) { // Only start if not already running
+                isRunning = true;
+                interval = setInterval(() => {
+                    seconds++;
+                    if (seconds === 60) {
+                        minutes++;
+                        seconds = 0;
+                    }
+                    if (minutes === 60) {
+                        hours++;
+                        minutes = 0;
+                    }
+                    displayTime();
+                }, 1000);
+            }
+        }
+
+        // Stop the stopwatch
+        function stopStopwatch() {
+            clearInterval(interval);
+            isRunning = false;
+        }
+
+        // Reset the stopwatch
+        function resetStopwatch() {
+            stopStopwatch();
+            hours = 0;
+            minutes = 0;
+            seconds = 0;
+            displayTime();
+        }
+
+        // Display the updated time
+        function displayTime() {
+            const display = document.getElementById('display');
+            const hoursString = hours.toString().padStart(2, '0');
+            const minutesString = minutes.toString().padStart(2, '0');
+            const secondsString = seconds.toString().padStart(2, '0');
+            display.textContent = `${hoursString}:${minutesString}:${secondsString}`;
+        }
+    </script>
+</body>
+</html>

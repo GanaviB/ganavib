@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Search & Binary Converter</title>
+    <style>
+        /* Your CSS styles */
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Binary Search & Binary Converter</h1>
+        <p>An Interactive Guide to Binary Search Algorithm and Conversions</p>
+    </header>
+
+    <div class="container">
+        <section>
+            <h2>What is Binary Search?</h2>
+            <p>Binary Search is an efficient algorithm...</p>
+
+            <h3>Run Search Example</h3>
+            <div class="input-container">
+                <label for="sortedWords">Sorted List (comma-separated): </label>
+                <input type="text" id="sortedWords" placeholder="e.g., apple, banana, cherry, date">
+                <label for="targetWord">Target Word: </label>
+                <input type="text" id="targetWord" placeholder="e.g., cherry">
+                <button class="btn" onclick="runBinarySearch()">Run Binary Search</button>
+            </div>
+            <p id="binarySearchResult"></p>
+            <p id="binarySearchError" class="error"></p>
+        </section>
+
+        <section>
+            <h2>Binary Converter</h2>
+
+            <div class="conversion">
+                <div>
+                    <h3>Binary to Decimal</h3>
+                    <label for="binaryInput">Enter Binary Number: </label>
+                    <input type="text" id="binaryInput" placeholder="e.g., 1101">
+                    <button class="btn" onclick="convertBinaryToDecimal()">Convert to Decimal</button>
+                    <p id="binaryToDecimalResult"></p>
+                    <p id="binaryError" class="error"></p>
+                </div>
+
+                <div>
+                    <h3>Decimal to Binary</h3>
+                    <label for="decimalInput">Enter Decimal Number: </label>
+                    <input type="number" id="decimalInput" placeholder="e.g., 13">
+                    <button class="btn" onclick="convertDecimalToBinary()">Convert to Binary</button>
+                    <p id="decimalToBinaryResult"></p>
+                    <p id="decimalError" class="error"></p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Binary Search and Converter. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function runBinarySearch() {
+            const words = document.getElementById('sortedWords').value.split(',').map(word => word.trim());
+            const target = document.getElementById('targetWord').value.trim();
+
+            if (words.length === 0 || target === "") {
+                document.getElementById('binarySearchError').textContent = "Both the sorted list and target word are required!";
+                document.getElementById('binarySearchResult').textContent = "";
+                return;
+            } else {
+                document.getElementById('binarySearchError').textContent = "";
+            }
+
+            const result = binarySearch(words, target);
+            document.getElementById('binarySearchResult').textContent = result === -1 
+                ? 'Target not found' 
+                : `Target found at index ${result}`;
+        }
+
+        function binarySearch(arr, target) {
+            let low = 0;
+            let high = arr.length - 1;
+            while (low <= high) {
+                const mid = Math.floor((low + high) / 2);
+                if (arr[mid] === target) {
+                    return mid;
+                } else if (arr[mid] < target) {
+                    low = mid + 1;
+                } else {
+                    high = mid - 1;
+                }
+            }
+            return -1;
+        }
+
+        function convertBinaryToDecimal() {
+            const binary = document.getElementById('binaryInput').value.trim();
+
+            if (!/^[01]+$/.test(binary)) {
+                document.getElementById('binaryError').textContent = "Please enter a valid binary number!";
+                document.getElementById('binaryToDecimalResult').textContent = "";
+                return;
+            } else {
+                document.getElementById('binaryError').textContent = "";
+            }
+
+            const decimal = binaryToDecimal(binary);
+            document.getElementById('binaryToDecimalResult').textContent = `Decimal: ${decimal}`;
+        }
+
+        function binaryToDecimal(binary) {
+            return binary.split('').reverse().reduce((acc, bit, index) => acc + bit * Math.pow(2, index), 0);
+        }
+
+        function convertDecimalToBinary() {
+            const decimal = parseInt(document.getElementById('decimalInput').value);
+
+            if (isNaN(decimal) || decimal < 0) {
+                document.getElementById('decimalError').textContent = "Please enter a valid positive decimal number!";
+                document.getElementById('decimalToBinaryResult').textContent = "";
+                return;
+            } else {
+                document.getElementById('decimalError').textContent = "";
+            }
+
+            const binary = decimalToBinary(decimal);
+            document.getElementById('decimalToBinaryResult').textContent = `Binary: ${binary}`;
+        }
+
+        function decimalToBinary(n) {
+            let binary = '';
+            while (n > 0) {
+                binary = (n % 2) + binary;
+                n = Math.floor(n / 2);
+            }
+            return binary || '0';
+        }
+    </script>
+</body>
+</html>

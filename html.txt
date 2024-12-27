@@ -1,0 +1,109 @@
+<head><meta charset="utf-8"><title>
+	Dayananda Sagar Institutions
+</title><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta http-equiv="Content-type" content="text/html; charset=utf-8"><meta name="description"><meta name="author"><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&amp;subset=all" rel="stylesheet" media="all" type="text/css">
+
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="../Default/assets/global/plugins/font-awesome/css/font-awesome.min.css?V=2022.12.05.12.05" rel="stylesheet" type="text/css">
+    <link href="../Default/assets/global/plugins/simple-line-icons/simple-line-icons.min.css?V=2022.12.05.12.05" rel="stylesheet" type="text/css">
+    <link href="../Default/assets/global/plugins/bootstrap/css/bootstrap.min.css?V=2022.12.05.12.05" rel="stylesheet" type="text/css">
+    <link href="../Default/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css?V=2022.12.05.12.05" rel="stylesheet" type="text/css">
+    <!-- END GLOBAL MANDATORY STYLES -->
+
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <link href="../Default/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css?V=2022.12.05.12.05" rel="stylesheet" type="text/css">
+
+    <link href="../Default/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css?V=2022.12.05.12.05" rel="stylesheet" type="text/css">
+    <link href="../Default/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css?V=2022.12.05.12.05" rel="stylesheet" type="text/css">
+    <link href="../Default/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css?V=2022.12.05.12.05" rel="stylesheet" type="text/css">
+    <link href="../Default/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css?V=2022.12.05.12.05" rel="stylesheet" type="text/css">
+
+    <link href="../Default/assets/global/plugins/select2/css/select2.min.css?V=2022.12.05.12.05" rel="stylesheet" type="text/css">
+    <link href="../Default/assets/global/plugins/select2/css/select2-bootstrap.min.css?V=2022.12.05.12.05" rel="stylesheet" type="text/css">
+
+    <link href="../Default/assets/global/plugins/datatables/datatables.min.css?V=2022.12.05.12.05" rel="stylesheet" type="text/css">
+    <link href="../Default/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css?V=2022.12.05.12.05" rel="stylesheet" type="text/css">
+    <link href="../Default/assets/global/plugins/animate/animate.css?V=202103180702" rel="stylesheet">
+    <!-- END PAGE LEVEL PLUGINS -->
+     <link href="../Default/assets/global/plugins/bootstrap-multiselect/css/bootstrap-multiselect.css?V=2022.12.05.12.05" rel="stylesheet" id="style_components" type="text/css">
+    <!-- BEGIN THEME GLOBAL STYLES -->
+    <link href="../Default/assets/global/css/components.min.css?V=2022.12.05.12.05" rel="stylesheet" id="style_components" type="text/css">
+    <link href="../Default/assets/global/css/plugins.min.css?V=2022.12.05.12.05" rel="stylesheet" type="text/css">
+    <!-- END THEME GLOBAL STYLES -->
+
+    <!-- BEGIN THEME LAYOUT STYLES -->
+    <link href="../Default/assets/layouts/layout3/css/layout.min.css?V=2022.12.05.12.05" rel="stylesheet" type="text/css">
+    <link href="../Default/assets/layouts/layout3/css/themes/default.min.css?V=2022.12.05.12.05" rel="stylesheet" type="text/css" id="style_color">
+    <link href="../Default/assets/layouts/layout3/css/custom.min.css?V=2022.12.05.12.05" rel="stylesheet" type="text/css">
+    <!-- END THEME LAYOUT STYLES -->
+
+    <!-- BEGIN CUSTOM STYLES -->
+    <link href="../Default/CSS/Minified/gn-globals-min.css?V=2022.12.05.12.05" rel="stylesheet" type="text/css">
+    <link href="../Default/CSS/Minified/gn-custom-min.css?V=2022.12.05.12.05" rel="stylesheet" type="text/css">
+    <link id="ctl00_logoicon" rel="shortcut icon" href="https://ums.mydsi.org/U111/University/Institute/1/InsLogoSquare_1.png">
+    <!-- END CUSTOM STYLES -->
+
+
+    <!-- BEGIN BODY -->
+    <style>
+        .page-sidebar .page-sidebar-menu li > a.nav-link, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu li > a.nav-link {
+            display: flex !important;
+        }
+
+        .page-footer {
+            /*position: fixed !important;*/
+            left: 0 !important;
+            right: 0 !important;
+            z-index: 10000 !important;
+            bottom: 0 !important;
+        }
+
+        .page-title {
+            box-shadow: 0px 0px 0px 0px rgba(255, 255, 255, 0.08) !important;
+        }
+    </style>
+    
+
+    
+    <style>
+        .blink_me_Placement, .blink_me_TermRegistrationProcess, .blink_me_HostelRegistrationRenewalProcess, .blink_me_TransportRegistrationProcess {
+            animation: blinker 2s linear infinite;
+        }
+
+        @keyframes blinker {
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
+
+
+    <script>
+        //To Prevent Focus Lost on Post Back in Update Panel
+        var postbackElement = null;
+        function RestoreFocus(source, args) {
+            if (postbackElement != null && postbackElement.id != null) {
+                var PostBackControl = document.getElementById(postbackElement.id);
+
+                if (PostBackControl != null && typeof (PostBackControl.type) !== 'undefined') {
+                    var x = PostBackControl.type;
+
+                    if (x == "select-one")
+                        PostBackControl.focus();
+
+                    if (PostBackControl.classList.contains("btnSave"))
+                        GNScrollToTop();
+                }
+            }
+        }
+        function SavePostbackElement(source, args) {
+            postbackElement = args.get_postBackElement();
+        }
+        function AddRequestHandler() {
+
+            // if (typeof Sys !== 'undefined') {
+            var prm = Sys.WebForms.PageRequestManager.getInstance();
+            prm.add_endRequest(RestoreFocus);
+            prm.add_beginRequest(SavePostbackElement);
+            //  }
+        }
+    </script></head>
